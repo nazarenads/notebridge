@@ -9,18 +9,23 @@ export default defineSchema({
     folderId: v.optional(v.id("folders")),
     tagIds: v.array(v.id("tags")),
     isPinned: v.boolean(),
+    userId: v.string(),
   })
     .index("by_folder", ["folderId"])
+    .index("by_user", ["userId"])
     .searchIndex("search_notes", {
       searchField: "plainText",
-      filterFields: ["folderId"],
+      filterFields: ["folderId", "userId"],
     }),
 
   folders: defineTable({
     name: v.string(),
     icon: v.optional(v.string()), // emoji
     parentId: v.optional(v.id("folders")),
-  }).index("by_parent", ["parentId"]),
+    userId: v.string(),
+  })
+    .index("by_parent", ["parentId"])
+    .index("by_user", ["userId"]),
 
   tags: defineTable({
     name: v.string(),
