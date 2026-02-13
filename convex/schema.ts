@@ -9,7 +9,7 @@ export default defineSchema({
     folderId: v.optional(v.id("folders")),
     tagIds: v.array(v.id("tags")),
     isPinned: v.boolean(),
-    userId: v.optional(v.string()),
+    userId: v.string(),
   })
     .index("by_folder", ["folderId"])
     .index("by_user", ["userId"])
@@ -22,7 +22,7 @@ export default defineSchema({
     name: v.string(),
     icon: v.optional(v.string()), // emoji
     parentId: v.optional(v.id("folders")),
-    userId: v.optional(v.string()),
+    userId: v.string(),
   })
     .index("by_parent", ["parentId"])
     .index("by_user", ["userId"]),
