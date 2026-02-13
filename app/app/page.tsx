@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useQuery } from "convex/react";
 import { useConvexAuth } from "convex/react";
-import { SignIn, UserButton } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import FolderTree from "@/components/sidebar/FolderTree";
@@ -11,27 +12,21 @@ import NoteList from "@/components/sidebar/NoteList";
 import Editor from "@/components/editor/Editor";
 import ChatPanel from "@/components/ai/ChatPanel";
 
-export default function Home() {
+export default function AppPage() {
   const { isAuthenticated, isLoading } = useConvexAuth();
+  const router = useRouter();
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center bg-zinc-950">
+      <div className="flex h-screen items-center justify-center bg-[#0D0D0F]">
         <div className="text-sm text-zinc-500">Loading...</div>
       </div>
     );
   }
 
   if (!isAuthenticated) {
-    return (
-      <div className="flex h-screen flex-col items-center justify-center gap-6 bg-zinc-950">
-        <h1 className="text-2xl font-bold text-zinc-100">NoteBridge</h1>
-        <p className="text-sm text-zinc-400">
-          AI-powered note-taking for software engineers
-        </p>
-        <SignIn routing="hash" />
-      </div>
-    );
+    router.replace("/");
+    return null;
   }
 
   return <AuthenticatedApp />;
@@ -75,7 +70,7 @@ function AuthenticatedApp() {
       </aside>
 
       {/* Editor */}
-      <main className="flex-1 overflow-hidden bg-zinc-950">
+      <main className="flex-1 overflow-hidden bg-[#0D0D0F]">
         <div className="flex h-full flex-col">
           {/* Toolbar area */}
           <div className="flex items-center justify-between border-b border-zinc-800 px-4 py-2">
